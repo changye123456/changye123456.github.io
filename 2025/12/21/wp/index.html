@@ -201,6 +201,9 @@
        
 
 
+
+
+
 <article id="post-wp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   
     
@@ -239,12 +242,12 @@
         
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li></ul>
 
-      </header>
+      </header> 
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <h1 id="MOECTF"><a href="#MOECTF" class="headerlink" title="MOECTF"></a>MOECTF</h1><h1 id="如何上传图片"><a href="#如何上传图片" class="headerlink" title="如何上传图片"></a>如何上传图片</h1><p>将图片文件夹放在source文件夹下面，一定不要与文件名字一样，</p>
+          <h1><span id="moectf">MOECTF</span></h1><h1><span id="如何上传图片">如何上传图片</span></h1><p>将图片文件夹放在source文件夹下面，一定不要与文件名字一样，</p>
 <p>之后mark语法即可(赞美徐✌)</p>
-<h1 id="1-upx-revange"><a href="#1-upx-revange" class="headerlink" title="1.upx_revange"></a>1.upx_revange</h1><p><img src="/mywp/wp1.jpg" alt="wp1"></p>
+<h1><span id="1upx_revange">1.upx_revange</span></h1><p><img src="/mywp/wp1.jpg" alt="wp1"></p>
 <p>显然上面版本号下面0D将upx！扣掉</p>
 <p>加上55 50 58 21（upx！）通过编辑中的插入字节</p>
 <p>之后 upx -d脱壳0</p>
@@ -260,7 +263,7 @@
 <p><img src="/mywp/wp4.jpg" alt="wp4"></p>
 <p>这已经能看见flag的形状，那为什么不对呢， 因为这是字符串其中\表示\</p>
 <p>得出答案moectf{Y0u_Re4l1y_G00d_4t_Upx!!!}</p>
-<h1 id="2ezandroid-pro"><a href="#2ezandroid-pro" class="headerlink" title="2ezandroid.pro"></a>2<strong>ezandroid.pro</strong></h1><p><img src="/mywp/wp5.jpg" alt="wp5"></p>
+<h1><span id="2ezandroidpro">2<strong>ezandroid.pro</strong></span></h1><p><img src="/mywp/wp5.jpg" alt="wp5"></p>
 <p>这里补充一下看s0文件先导入c头文件，之后将第一个参数结构体变为JNEVN</p>
 <p>这里有loadlib加载native库，这一看就是用ida看so文件</p>
 <p><img src="/mywp/wp6.jpg" alt="wp6"></p>
@@ -284,12 +287,12 @@
 <p>raw（不做任何处理）当时做时选的hex没选raw导致flag全变为16进制的</p>
 <p><img src="/mywp/wp7.jpg" alt="wp7"></p>
 <p>moectf{SM4_Android_I5_Funing!!!}</p>
-<h1 id="rusty-sudoku（数独）（moectf的逆向终章）"><a href="#rusty-sudoku（数独）（moectf的逆向终章）" class="headerlink" title="rusty_sudoku（数独）（moectf的逆向终章）"></a><strong>rusty_sudoku</strong>（数独）（moectf的逆向终章）</h1><p>我一开始并不知道数独是什么，前了解一下数读为9乘以9（每个3乘以3不重复）一行一列全含1-9<br><img src="/mywp/wp8.jpg" alt="wp8"></p>
+<h1><span id="rusty_sudoku数独moectf的逆向终章"><strong>rusty_sudoku</strong>（数独）（moectf的逆向终章）</span></h1><p>我一开始并不知道数独是什么，前了解一下数读为9乘以9（每个3乘以3不重复）一行一列全含1-9<br><img src="/mywp/wp8.jpg" alt="wp8"></p>
 <p>这***一看就是数独原来的棋盘找个求解器<br><img src="/mywp/wp9.jpg" alt="wp9"></p>
 <p>导入数据‘.’换为0</p>
 <p>然后<br><img src="/mywp/wp10.jpg" alt="wp10"></p>
 <p>有个细节一定要打断点再输入，否则直接关了</p>
-<h1 id="ctf（排序规则先week的reverse再misc）"><a href="#ctf（排序规则先week的reverse再misc）" class="headerlink" title="&lt;2&gt;?ctf（排序规则先week的reverse再misc）"></a>&lt;2&gt;?ctf（排序规则先week的reverse再misc）</h1><h1 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h1><h1 id="1PlzDebugMe"><a href="#1PlzDebugMe" class="headerlink" title="1PlzDebugMe"></a>1<strong>PlzDebugMe</strong></h1><p><img src="/mywp/wp11.jpg" alt="wp11"></p>
+<h1><span id="lt2gtctf排序规则先week的reverse再misc">&lt;2&gt;?ctf（排序规则先week的reverse再misc）</span></h1><h1><span id="reverse">Reverse</span></h1><h1><span id="1plzdebugme">1<strong>PlzDebugMe</strong></span></h1><p><img src="/mywp/wp11.jpg" alt="wp11"></p>
 <p>开局找main函数，然后并没找到main函数，这说明他在藏，直接（shift+f12）找字符串，定位到相应区域</p>
 <p><img src="/mywp/wp12.jpg" alt="wp12"></p>
 <p><img src="/mywp/wp13.jpg" alt="wp13"></p>
@@ -316,7 +319,7 @@
 
 <p>结果为flag{Y0u_Kn0w_H0w_t0_D3bug!!!!!}</p>
 <p><img src="/mywp/wp21.jpg" alt="wp21"></p>
-<h1 id="2ezCSharp"><a href="#2ezCSharp" class="headerlink" title="2ezCSharp"></a>2<strong>ezCSharp</strong></h1><p>用ida看</p>
+<h1><span id="2ezcsharp">2<strong>ezCSharp</strong></span></h1><p>用ida看</p>
 <p><img src="/mywp/wp22.jpg" alt="wp22"></p>
 <p>这很抽象，并且用字符串查找什么都没有</p>
 <p>看函数名EncodedFlagAttribute__get_EncodedValue	 EncodedFlagAttribute__.ctor	seg000	 FlagContainer__.ctor	 Program__Main	 Program__DecodeFlag	 Program__.ctor	 Program__.cctor</p>
@@ -335,7 +338,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    char array[] = &quot;D1ucj0u!tqjwf!fohjoffsjoh!xj!epspqz!ju!gvo!2025&quot;; </span><br><span class="line">    for (int i = 0; i &lt; strlen(array); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			if (array[i] != &#x27;!&#x27;)</span><br><span class="line">			&#123;</span><br><span class="line">				switch (array[i])</span><br><span class="line">				&#123;</span><br><span class="line">				case &#x27;a&#x27;:</span><br><span class="line">					array[i] = &#x27;z&#x27;;</span><br><span class="line">					break;</span><br><span class="line">				case &#x27;b&#x27;:</span><br><span class="line">				case &#x27;c&#x27;:</span><br><span class="line">				case &#x27;d&#x27;:</span><br><span class="line">				case &#x27;e&#x27;:</span><br><span class="line">				case &#x27;f&#x27;:</span><br><span class="line">				case &#x27;g&#x27;:</span><br><span class="line">				case &#x27;h&#x27;:</span><br><span class="line">				case &#x27;i&#x27;:</span><br><span class="line">				case &#x27;j&#x27;:</span><br><span class="line">				case &#x27;k&#x27;:</span><br><span class="line">				case &#x27;l&#x27;:</span><br><span class="line">				case &#x27;m&#x27;:</span><br><span class="line">				case &#x27;n&#x27;:</span><br><span class="line">				case &#x27;o&#x27;:</span><br><span class="line">				case &#x27;p&#x27;:</span><br><span class="line">				case &#x27;q&#x27;:</span><br><span class="line">				case &#x27;r&#x27;:</span><br><span class="line">				case &#x27;s&#x27;:</span><br><span class="line">				case &#x27;t&#x27;:</span><br><span class="line">				case &#x27;u&#x27;:</span><br><span class="line">				case &#x27;v&#x27;:</span><br><span class="line">				case &#x27;w&#x27;:</span><br><span class="line">				case &#x27;x&#x27;:</span><br><span class="line">				case &#x27;y&#x27;:</span><br><span class="line">				case &#x27;z&#x27;:</span><br><span class="line">					array[i] -= 1;</span><br><span class="line">					break;</span><br><span class="line">				default :</span><br><span class="line">					 break;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				array[i] = &#x27;_&#x27;;</span><br><span class="line">		    &#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">   printf(&quot;%s&quot;, array);</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>运行得D1tbi0t_spive_engineering_wi_doropy_it_fun_2025（套上flag{}就是正确flag）</p>
-<h1 id="3-ezcalculate"><a href="#3-ezcalculate" class="headerlink" title="3.ezcalculate"></a>3.ezcalculate</h1><p><img src="/mywp/wp28.jpg" alt="wp28"></p>
+<h1><span id="3ezcalculate">3.ezcalculate</span></h1><p><img src="/mywp/wp28.jpg" alt="wp28"></p>
 <p>打断点是加密的逻辑</p>
 <p>很明显先加上再异或之后减去key</p>
 <p>逆回去就是先加再异或再减；</p>
