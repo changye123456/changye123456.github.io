@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ailearn | wuye的博客</title><meta name="author" content="无夜"><meta name="copyright" content="无夜"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="ailearn">
+<meta property="og:url" content="https://changye123456.github.io/2026/03/19/ailearn/index.html">
+<meta property="og:site_name" content="wuye的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://changye123456.github.io/images/b0c1d74766dd8bce0ad860be15c46993a.jpg">
+<meta property="article:published_time" content="2026-03-19T02:14:53.000Z">
+<meta property="article:modified_time" content="2026-03-19T02:14:53.931Z">
+<meta property="article:author" content="无夜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://changye123456.github.io/images/b0c1d74766dd8bce0ad860be15c46993a.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ailearn",
+  "url": "https://changye123456.github.io/2026/03/19/ailearn/",
+  "image": "https://changye123456.github.io/images/b0c1d74766dd8bce0ad860be15c46993a.jpg",
+  "datePublished": "2026-03-19T02:14:53.000Z",
+  "dateModified": "2026-03-19T02:14:53.931Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "无夜",
+      "url": "https://changye123456.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://changye123456.github.io/2026/03/19/ailearn/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ailearn',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">wuye的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">ailearn</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">ailearn</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-19T02:14:53.000Z" title="发表于 2026-03-19 10:14:53">2026-03-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-19T02:14:53.931Z" title="更新于 2026-03-19 10:14:53">2026-03-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://changye123456.github.io">无夜</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://changye123456.github.io/2026/03/19/ailearn/">https://changye123456.github.io/2026/03/19/ailearn/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://changye123456.github.io" target="_blank">wuye的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/03/21/opencode%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%8E%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%AF%9D%E5%BC%8FAI%E7%9A%84%E4%B8%8B%E8%BD%BD/" title="opencode的使用与一个对话式AI的下载"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">opencode的使用与一个对话式AI的下载</div></div><div class="info-2"><div class="info-item-1">opencode的下载与使用opencode是在终端的AI编程助手，它可以读懂项目，修改代码，自动完成任务 AI 编程工具的两大类型IDE 类代表产品：Cursor、Windsurf、GitHub Copilot、Trae 特点：  图形界面，所见即所得 AI 作为编辑器的”副驾驶” 你还是主要操作者，需要盯着屏幕  适合：习惯 IDE、需要边看边改的场景 TUI 类（终端界面工具）代表产品：Claude Code、Codex CLI、OpenCode 特点：  终端原生，轻量快速 AI 是主要执行者，你是指挥官 可以开多个任务并行，不用盯着屏幕 可编程、可自动化、可嵌入 CI&#x2F;CD  适合：Vibe Coding、习惯终端、需要自动化的场景 OpenCode 属于 TUI 类。 连接 DeepSeek（首选推荐） - AI 编程助手实战指南 下载OpenCode | 开源 AI 编程代理 这就结束了 build模式的AI可以修改创建文档，而plan就是纯对话 接着是一个对话式AI使用 .env是配置API的接口 先开虚拟环境 python -m venv .venv ...</div></div></div></a><a class="pagination-related" href="/2026/03/08/python%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/" title="python学习之旅"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">python学习之旅</div></div><div class="info-2"><div class="info-item-1">python学习（持续更新）入门python作为编写agent的基础，随着AI的发展，传统的码农将会走向没落，所以才开了这篇python学习的帖子，说不定哪天这帖子就写一些agent开发，当然以后还会有一些mcp的建立，ai是个好工具（被ai大人吓哭了），传统的写代码会被AI取代，只有在维度上胜过AI才可以，当然练习与实战是必不可少的（理论结合实战才能学好代码） 工具python3，idle（python也有自己的devc++，初学时先不用轮椅，这样才能更好锻炼代码能力），pycharm(python自己的vscode，更好用)，AI(deepseek, coplit, gemini,chatgptm,AI时代肯定要好好使用AI，让AI成为自己的助手，而不是替代AI让你学习),bilibili,互联网(各种人的blog与帖子)，github（找项目与笔记） 1.一切开始之前先说一下程序规范 &lt;一&gt;编码部分 (1)编程 (2)代码规范 缩进、行宽（垂直方向）、引号、空行、编码 (3)import语句 (4)空格 (5)换行 (6)docstring（文档字符串”””  ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">无夜</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/21/opencode%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%8E%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%AF%9D%E5%BC%8FAI%E7%9A%84%E4%B8%8B%E8%BD%BD/" title="opencode的使用与一个对话式AI的下载">opencode的使用与一个对话式AI的下载</a><time datetime="2026-03-21T02:11:07.000Z" title="发表于 2026-03-21 10:11:07">2026-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/19/ailearn/" title="ailearn">ailearn</a><time datetime="2026-03-19T02:14:53.000Z" title="发表于 2026-03-19 10:14:53">2026-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/08/python%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/" title="python学习之旅">python学习之旅</a><time datetime="2026-03-08T11:49:26.000Z" title="发表于 2026-03-08 19:49:26">2026-03-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/20/qctfweek3/" title="qctfweek3">qctfweek3</a><time datetime="2026-02-20T07:54:17.000Z" title="发表于 2026-02-20 15:54:17">2026-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/17/%E6%96%B0%E5%B9%B4/" title="新年">新年</a><time datetime="2026-02-17T13:37:17.000Z" title="发表于 2026-02-17 21:37:17">2026-02-17</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 无夜</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.3"></script><script src="/js/main.js?v=5.5.3"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
