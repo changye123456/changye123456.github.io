@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>游戏逆向入门 | wuye的博客</title><meta name="author" content="无夜"><meta name="copyright" content="无夜"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="unity游戏逆向unity游戏主要是由c#编写的 unity最大的特点就是一次制作多平台部署，这一核心功能是通过Mono实现的，但在2014年引入了IL2CPP，相比于mono来说安全性型更强的方式 1. Mono逆向Mono打包的逆向比较简单，主逻辑多是在game&#x2F;data&#x2F;Managed&#x2F;文件夹下的Assembly-CSharp.dll等文件 Mono技术原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏逆向入门">
+<meta property="og:url" content="https://changye123456.github.io/2026/04/13/%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="wuye的博客">
+<meta property="og:description" content="unity游戏逆向unity游戏主要是由c#编写的 unity最大的特点就是一次制作多平台部署，这一核心功能是通过Mono实现的，但在2014年引入了IL2CPP，相比于mono来说安全性型更强的方式 1. Mono逆向Mono打包的逆向比较简单，主逻辑多是在game&#x2F;data&#x2F;Managed&#x2F;文件夹下的Assembly-CSharp.dll等文件 Mono技术原理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://changye123456.github.io/images/b0c1d74766dd8bce0ad860be15c46993a.jpg">
+<meta property="article:published_time" content="2026-04-13T08:32:47.000Z">
+<meta property="article:modified_time" content="2026-04-19T13:19:20.350Z">
+<meta property="article:author" content="无夜">
+<meta property="article:tag" content="reverse lihui">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://changye123456.github.io/images/b0c1d74766dd8bce0ad860be15c46993a.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "游戏逆向入门",
+  "url": "https://changye123456.github.io/2026/04/13/%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/",
+  "image": "https://changye123456.github.io/images/b0c1d74766dd8bce0ad860be15c46993a.jpg",
+  "datePublished": "2026-04-13T08:32:47.000Z",
+  "dateModified": "2026-04-19T13:19:20.350Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "无夜",
+      "url": "https://changye123456.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://changye123456.github.io/2026/04/13/%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '游戏逆向入门',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">wuye的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">游戏逆向入门</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">游戏逆向入门</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-13T08:32:47.000Z" title="发表于 2026-04-13 16:32:47">2026-04-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-19T13:19:20.350Z" title="更新于 2026-04-19 21:19:20">2026-04-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="unity游戏逆向"><a href="#unity游戏逆向" class="headerlink" title="unity游戏逆向"></a>unity游戏逆向</h1><p>unity游戏主要是由c#编写的</p>
+<p>unity最大的特点就是一次制作多平台部署，这一核心功能是通过Mono实现的，但在2014年引入了IL2CPP，相比于mono来说安全性型更强的方式</p>
+<h2 id="1-Mono逆向"><a href="#1-Mono逆向" class="headerlink" title="1. Mono逆向"></a>1. Mono逆向</h2><p>Mono打包的逆向比较简单，主逻辑多是在game&#x2F;data&#x2F;Managed&#x2F;文件夹下的Assembly-CSharp.dll等文件</p>
+<p>Mono技术原理</p>
+<p>&lt;1&gt;Mono是一个开源的.NET框架实现</p>
+<p>&lt;2&gt;允许Unity在多种支持.NET的平台上运行</p>
+<p>&lt;3&gt;提供兼容的运行时环境和类库</p>
+<p>&lt;4&gt;将源码编译成IL(中间语言代码)</p>
+<h3 id="dnspy"><a href="#dnspy" class="headerlink" title="dnspy"></a>dnspy</h3><p>game&#x2F;data&#x2F;Managed&#x2F;文件夹下的Assembly-CSharp.dll放在dnspy</p>
+<p>直接在Assembly-CSharp.dll找_默认命名空间容器，c#的类就在其中</p>
+<p>ctrl-shift+s修改</p>
+<h3 id="ce（游戏修改器）"><a href="#ce（游戏修改器）" class="headerlink" title="ce（游戏修改器）"></a>ce（游戏修改器）</h3><p>作弊器，主要功能是内存扫描、16进制编辑器、动态调试</p>
+<p>进行数据的快速扫描和修改</p>
+<p>最左面是扫描到的数据，下面进行修改</p>
+<p>第一个例题先进行扫描，之后打一下变个数，之后再下一次扫喵找到数(相当于在第一次找到的在进行二次筛选)</p>
+<p><strong>CE的MoNO分析</strong></p>
+<p>在游戏中访问和修改C#类、函数集齐对象，实现数据的精确修改</p>
+<p>先用dnspy在_（默认命名空间）的关键类下找到关键函数，定位函数所在的dll文件</p>
+<p>之后通过CE附加程序，之后Mono先激活再查找Mono中的.Net info找到关键函数的字段</p>
+<p>C#的字段先当与一个指针（先找到字段指向的地址）</p>
+<p>点击Look up instance找到实例其值就是地址1e8c99cb020</p>
+<p>在这个实例下(地址下)找到原来字段的数据类型所在的地方，之后找到方法然后invoke</p>
+<h2 id="2-Mono安卓"><a href="#2-Mono安卓" class="headerlink" title="2.Mono安卓"></a>2.Mono安卓</h2><p>其特征是在lib&#x2F;架构&#x2F;下存在libmono.so</p>
+<p>Assembly-CSharp.dll存在在assets&#x2F;bin&#x2F;Data&#x2F;Managed</p>
+<h2 id="3-IL2CPP"><a href="#3-IL2CPP" class="headerlink" title="3.IL2CPP"></a>3.IL2CPP</h2><ul>
+<li><p>游戏目录下存在大型GameAssembly.dll文件(直接在游戏目录)</p>
+</li>
+<li><p>包含Data&#x2F;il2cpp_data&#x2F;Metadata&#x2F;global-metadata.dat文件</p>
+</li>
+</ul>
+<p>global-metadata.dat是一个元数据，包含类型信息、方法信息、字段信息</p>
+<p>Mono将代码编译成IL的中间语言，逆向相对容易，</p>
+<p>IL2Cpp：</p>
+<p>1.将<strong>IL</strong>代码转化为**c++**代码</p>
+<p>2.再编译成机器码，更安全</p>
+<h3 id="XYCTF2024-baby-unity"><a href="#XYCTF2024-baby-unity" class="headerlink" title="XYCTF2024-baby unity"></a>XYCTF2024-baby unity</h3><p>主要分析GameAssembly.dll</p>
+<p>GameAssembly.dll不是C#，而是IL2cpp转换后的c++</p>
+<p>首先要用il2cppdumper通过global-metadata.dat（元数据）恢复符号表等信息，导出脚本</p>
+<p>il2cppdumper先选GameAssembly.dll再选Data&#x2F;il2cpp_data&#x2F;Metadata&#x2F;global-metadata.dat</p>
+<p>各种原数据都在json中，script.json和头文件</p>
+<p>在script file中先选ida_with_struct_py3.py之后再选ilcpp2.h与script.json</p>
+<p>便可加载符号 + 结构等信息</p>
+<p>生成一个DummyDll，这主要是辅助分析，仅有名字无内容的空dll（看Assembly-Csharp.dll）</p>
+<p>ida搜索找到的关键函数</p>
+<p>.data:0000000181261938 StringLiteral_4850 dq 0A0001979h        ; DATA XREF: Check$$CheckkkkkkkkkkFlag+12↑o<br>.data:0000000181261938                                         ; Check$$CheckkkkkkkkkkFlag+DD↑r …<br>.data:0000000181261938                                         ; XIcKYJU8Buh:UeV:BKN{U[JvUL??VuZ?CXJ;AX^{Ae]gA[]gUecb@K]ei^22</p>
+<p>就算找不到具体的值ida也会辅助分析出来</p>
+<h3 id="il2cpp安卓"><a href="#il2cpp安卓" class="headerlink" title="il2cpp安卓"></a>il2cpp安卓</h3><p>特征lib&#x2F;架构&#x2F;下存在libil2cpp.so(mono是libmono.so)</p>
+<p>assets&#x2F;bin&#x2F;Data&#x2F;Managed&#x2F;Metadata&#x2F;global-metadata.dat元数据</p>
+<p>正常的global-metadata.dat头为AF 1B B1 FA</p>
+<h2 id="Godot逆向"><a href="#Godot逆向" class="headerlink" title="Godot逆向"></a>Godot逆向</h2><p>GDRE_Tools</p>
+<p>github的项目地址：<a target="_blank" rel="noopener" href="https://github.com/GDRETools/gdsdecomp">https://github.com/GDRETools/gdsdecomp</a></p>
+<p>GDRE_Tools解包游戏</p>
+<p>按extract导出，用godoat加载可以直接修改</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://changye123456.github.io">无夜</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://changye123456.github.io/2026/04/13/%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/">https://changye123456.github.io/2026/04/13/%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://changye123456.github.io" target="_blank">wuye的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/reverse-lihui/">reverse lihui</a></div><div class="post-share"><div class="social-share" data-image="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/04/26/Js%E9%80%86%E5%90%91/" title="Js逆向"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Js逆向</div></div><div class="info-2"><div class="info-item-1">杂谈还久没写blog 最近还是摆了点 概念可以破解前端加密、绕过反爬机制、模拟运行行为等 基础语法基础 基本数据类型  字符串 String数字  Number布尔 Boolean空值 Null未定义 Undefined独一无二的值 Symbol  引用数据类型  对象 Object 函数 Function 数组 Array  语句标识符  声明块作用域的变量 let(也可以全局作用域，推荐) 声明变量 var 断点调试  debugger 当前所属对象 this  比较运算符  &#x3D;&#x3D;尝试将等号两边转为相同的类型 &#x3D;&#x3D;&#x3D;是要类型与值完全相等 在js逆向的&#x3D;&#x3D;是，可以传入一个通过类型转换后能匹配上的值俩进行绕过 null &#x3D;&#x3D; undefined返回true null &#x3D;&#x3D;&#x3D;&#x3D; undefined返回NULL NaN &#x3D;&#x3D; NaN返回fasle（其实在在JavaScript中，NaN（Not-a-Number）是一个全局属性，用于表示...</div></div></div></a><a class="pagination-related" href="/2026/03/29/agent%E5%AD%A6%E4%B9%A0/" title="agent学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">agent学习</div></div><div class="info-2"><div class="info-item-1">初识智能体智能体是通过sensor(传感器)感知环境(Environment),并自主的通过Actuators（执行器）采取Action（行为），模仿人的感受与行为，连接到语言上就是属性与行为 环境是外部世界，通过摄像头、麦克风与雷达或者应用编程接口(Application Programming Interface，也就是API)返回的数据流 接收数据后要通过行为对环境施加影响，执行器既可以是物理设备（如机械臂与方向盘(感觉与智能驾驶有关)）或者虚拟工具(执行代码或者调用服务) 赋予其智能的是其自主性 一些远古(传统)智能体(从简单到复杂、从被动反应到主动学习)反射智能体：由”条件-动作”规则构成，完全依赖感知输入，不具备记忆或预测能力 如果环境的当前状态不足以作为决策的全部依据，智能体该怎么办？ 引出了 基于模型的反射智能体（Model-Based Reflex Agent）：引入了”状态”概念，其有一个内部的世界模型(World Model)用于追踪和理解环境中那些无法被直接感知的方面 仅仅理解世界还不够，智能体需要有明确的目标 基于目标的反射智能体(Goal-Basd A...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">无夜</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#unity%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91"><span class="toc-number">1.</span> <span class="toc-text">unity游戏逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Mono%E9%80%86%E5%90%91"><span class="toc-number">1.1.</span> <span class="toc-text">1. Mono逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dnspy"><span class="toc-number">1.1.1.</span> <span class="toc-text">dnspy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ce%EF%BC%88%E6%B8%B8%E6%88%8F%E4%BF%AE%E6%94%B9%E5%99%A8%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">ce（游戏修改器）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Mono%E5%AE%89%E5%8D%93"><span class="toc-number">1.2.</span> <span class="toc-text">2.Mono安卓</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-IL2CPP"><span class="toc-number">1.3.</span> <span class="toc-text">3.IL2CPP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XYCTF2024-baby-unity"><span class="toc-number">1.3.1.</span> <span class="toc-text">XYCTF2024-baby unity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#il2cpp%E5%AE%89%E5%8D%93"><span class="toc-number">1.3.2.</span> <span class="toc-text">il2cpp安卓</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Godot%E9%80%86%E5%90%91"><span class="toc-number">1.4.</span> <span class="toc-text">Godot逆向</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/05/htmllearning/" title="htmllearning">htmllearning</a><time datetime="2026-05-05T12:27:31.000Z" title="发表于 2026-05-05 20:27:31">2026-05-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/03/pwnlearn/" title="pwnlearn">pwnlearn</a><time datetime="2026-05-03T07:49:54.000Z" title="发表于 2026-05-03 15:49:54">2026-05-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/26/Js%E9%80%86%E5%90%91/" title="Js逆向">Js逆向</a><time datetime="2026-04-26T12:12:00.000Z" title="发表于 2026-04-26 20:12:00">2026-04-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/13/%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8/" title="游戏逆向入门">游戏逆向入门</a><time datetime="2026-04-13T08:32:47.000Z" title="发表于 2026-04-13 16:32:47">2026-04-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/29/agent%E5%AD%A6%E4%B9%A0/" title="agent学习">agent学习</a><time datetime="2026-03-29T12:48:44.000Z" title="发表于 2026-03-29 20:48:44">2026-03-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 无夜</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.3"></script><script src="/js/main.js?v=5.5.3"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
