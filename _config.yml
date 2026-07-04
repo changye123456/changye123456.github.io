@@ -60,9 +60,7 @@ exclude: null
 ignore: null
 theme: butterfly
 deploy:
-  type: git
-  repository: https://github.com/changye123456/changye123456.github.io.git
-  branch: main
+  type: ''
 archive_generator:
   per_page: 0
 
