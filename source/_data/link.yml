@@ -1,0 +1,40 @@
+- class_name: 友情链接
+  class_desc: 那些人，那些事
+  link_list:
+    - name: Hexo
+      link: https://hexo.io/zh-tw/
+      avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
+      descr: 快速、简洁且高效的博客框架
+    - name: Butterfly
+      link: https://butterfly.js.org/
+      avatar: https://img.alicdn.com/imgextra/i4/O1CN01Z5paLz1O0Td01KxOM_!!6000000001644-2-tps-100-100.png
+      descr: A Simple and Card UI Design theme for Hexo
+    - name: westme1on
+      link: https://wes1.cn/
+      avatar: https://www.wes1.cn/assets/home/circlekumiko0.png
+      descr: 溯时溯光溯我心
+    - name: Yuoooka
+      link: https://yuoooka.cn/
+      avatar: https://yuoooka.cn/picture/avatar2.jpg
+      descr: Yuoooka Here is yuoooka , Dream to be an Agent developer&Reverse engineer
+    - name: 雪豹
+      link: https://sadsnowcat.github.io/                            
+      avatar: https://sadsnowcat.github.io/images/head.jpg        #图像
+      descr: 为了没有泪水的明天
+    - name: key
+      link: https://find-key.github.io/
+      avatar: https://find-key.github.io/images/head_image.jpg
+      descr: 为之则易，不为则难
+    - name: moyue
+      link: https://qmoyue.github.io/
+      avatar: https://qmoyue.github.io/_astro/avatar.CH-3W-fq.jpg
+      descr: Java が苦手です
+    - name: nick
+      link: https://nickchen.top/
+      avatar: https://nickchen.top/_astro/avatar.BpNDwfjH_ZzQD7a.webp
+      descr: 越平静，越汹涌
+    - name: JSnow
+      link: https://j5now.github.io/link/
+      avatar: https://j5now.github.io/img/me.jpg
+      descr: 越练越菜
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
