@@ -1,0 +1,499 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>可执行文件 | wuye的博客</title><meta name="author" content="无夜"><meta name="copyright" content="无夜"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言上半年遗留的问题了，一直想学完但是就是没拿出时间学，现在有时间了赶紧学 可执行文件可执行文件分为ELF(Executable and Linking Format）文件-&gt;linux 与PE（Portable[便捷的] Executable）文件，Windows PE文件此文件格式是windows可执行文件、对象和dll文件的标准格式，基于MISCRosoft的它基于 Microsoft">
+<meta property="og:type" content="article">
+<meta property="og:title" content="可执行文件">
+<meta property="og:url" content="https://www.mgoyy.cn/2026/10/23/%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="wuye的博客">
+<meta property="og:description" content="前言上半年遗留的问题了，一直想学完但是就是没拿出时间学，现在有时间了赶紧学 可执行文件可执行文件分为ELF(Executable and Linking Format）文件-&gt;linux 与PE（Portable[便捷的] Executable）文件，Windows PE文件此文件格式是windows可执行文件、对象和dll文件的标准格式，基于MISCRosoft的它基于 Microsoft">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.mgoyy.cn/images/b0c1d74766dd8bce0ad860be15c46993a.jpg">
+<meta property="article:published_time" content="2026-10-23T11:01:42.000Z">
+<meta property="article:modified_time" content="2026-10-28T11:13:54.474Z">
+<meta property="article:author" content="无夜">
+<meta property="article:tag" content="reverse">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.mgoyy.cn/images/b0c1d74766dd8bce0ad860be15c46993a.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "可执行文件",
+  "url": "https://www.mgoyy.cn/2026/10/23/%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/",
+  "image": "https://www.mgoyy.cn/images/b0c1d74766dd8bce0ad860be15c46993a.jpg",
+  "datePublished": "2026-10-23T11:01:42.000Z",
+  "dateModified": "2026-10-28T11:13:54.474Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "无夜",
+      "url": "https://www.mgoyy.cn"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.mgoyy.cn/2026/10/23/%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '可执行文件',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fas fa-stream"></i><span> Timeline</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">wuye的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">可执行文件</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fas fa-stream"></i><span> Timeline</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">可执行文件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-23T11:01:42.000Z" title="发表于 2026-10-23 19:01:42">2026-10-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-28T11:13:54.474Z" title="更新于 2026-10-28 19:13:54">2026-10-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上半年遗留的问题了，一直想学完但是就是没拿出时间学，现在有时间了赶紧学</p>
+<h1 id="可执行文件"><a href="#可执行文件" class="headerlink" title="可执行文件"></a>可执行文件</h1><p>可执行文件分为ELF(Executable and Linking Format）文件-&gt;linux</p>
+<p>与PE（Portable[便捷的] Executable）文件，Windows</p>
+<h2 id="PE文件"><a href="#PE文件" class="headerlink" title="PE文件"></a>PE文件</h2><p>此文件格式是windows可执行文件、对象和dll文件的标准格式，基于MISCRosoft的它基于 Microsoft 的 COFF（Common Object File Format）规范，并添加了一些特定于 Windows 的扩展</p>
+<table>
+<thead>
+<tr>
+<th>主拓展名</th>
+<th>种类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可执行系列</td>
+<td>EXE、SCR(屏幕保护程序)</td>
+</tr>
+<tr>
+<td>驱动文件系列</td>
+<td>SYS（现代Windows（NT内核）下的标准驱动程序）、VXD</td>
+</tr>
+<tr>
+<td>库系列</td>
+<td>DLL、OCX(ActiveX 控件文件）、CPL、DRV(设备驱动文件)</td>
+</tr>
+<tr>
+<td>对象文件系列</td>
+<td>OBJ</td>
+</tr>
+</tbody></table>
+<p>除了obj均可以运行，DLL、SYS可以在shell直接运行(调试器、服务器执行)</p>
+<p>OCX <strong>(OLE控制扩展)</strong>、CPL**(控制面板程序项)**本质上是特殊的DLL文件</p>
+<h3 id="PE文件的基本格式"><a href="#PE文件的基本格式" class="headerlink" title="PE文件的基本格式"></a>PE文件的基本格式</h3><table>
+<thead>
+<tr>
+<th>DOS头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DOS存根</td>
+</tr>
+<tr>
+<td>NT头</td>
+</tr>
+<tr>
+<td>节区头(.text)</td>
+</tr>
+<tr>
+<td>节区头(.data)</td>
+</tr>
+<tr>
+<td>节区头(.rsrc)</td>
+</tr>
+<tr>
+<td>NULL</td>
+</tr>
+<tr>
+<td>节区(.text)</td>
+</tr>
+<tr>
+<td>NULL</td>
+</tr>
+<tr>
+<td>节区(data)</td>
+</tr>
+<tr>
+<td>NULL</td>
+</tr>
+<tr>
+<td>节区(.rsrc)</td>
+</tr>
+</tbody></table>
+<p>dos头（标识文件类型：通过e_magic字段【通常是”MZ”，确认文件是可执行文件】，指向PE头，支持早期的DOS程序运行）</p>
+<p>dos到节区头是PE的头文件部分，其下区合称PE体，文件中使用偏移，内存中是用虚拟地址(VA)来定位</p>
+<p>dos存根：为了兼容MS-DOS操作系统，目的是当这个文件在 MS-DOS 上运行时提示一段文字，大部分情况下是：This program cannot be run in DOS mode. This program requires Microsoft Windows.”还有一个目的，就是指明 NT 头在文件中的位置。</p>
+<p>NT头主要包含：NT头是个复合结构，他是由PE Signature(“PE\0\0”50 45 00 00)+COFF Header(IMAGE_FILE_HEADER映像)+Optional Header(IMAGE_OPTIONAL_HEADER)</p>
+<p>节表示对后续节的描述</p>
+<p>节：实际上是一个容器，可以包含代码与数据<br>$$<br>不同的开发工具与编译选选项，节区名称大小个数也不一样，主要是按照不同用途分到不同的节里<br>$$<br>PE头和节为的NULL填充区，主要起到对齐作用，使得节区在文件和内存中符合对齐要求</p>
+<h3 id="VA与RVA"><a href="#VA与RVA" class="headerlink" title="VA与RVA"></a>VA与RVA</h3><p>VA是虚拟内存的绝对地址，RVA(relative virtual address)是相对地址，找到某个基址(imagBase)</p>
+<p>RVA + imagBase &#x3D; VA</p>
+<p>PE头大多以RVA形式存在，允许重定向</p>
+<h3 id="PE头"><a href="#PE头" class="headerlink" title="PE头"></a>PE头</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span> &#123;</span></span><br><span class="line">    WORD e_magic;      <span class="comment">// DOS签名 &quot;MZ&quot; (0x4D 0x5A),magic number</span></span><br><span class="line">    WORD e_cblp;       <span class="comment">// 最后一页的字节数</span></span><br><span class="line">    WORD e_cp;         <span class="comment">// 文件总页数</span></span><br><span class="line">    WORD e_crlc;       <span class="comment">// 重定位项数</span></span><br><span class="line">    WORD e_cparhdr;    <span class="comment">// 头部段大小</span></span><br><span class="line">    WORD e_minalloc;   <span class="comment">// 最小内存需求</span></span><br><span class="line">    WORD e_maxalloc;   <span class="comment">// 最大内存需求</span></span><br><span class="line">    WORD e_ss;         <span class="comment">// 初始堆栈段</span></span><br><span class="line">    WORD e_sp;         <span class="comment">// 初始堆栈指针</span></span><br><span class="line">    WORD e_csum;       <span class="comment">// 校验和</span></span><br><span class="line">    WORD e_ip;         <span class="comment">// 初始指令指针(入口偏移)Initial ip value</span></span><br><span class="line">    WORD e_cs;         <span class="comment">// 初始代码段</span></span><br><span class="line">    WORD e_lfarlc;     <span class="comment">// 重定位表偏移</span></span><br><span class="line">    WORD e_ovno;       <span class="comment">// 覆盖号</span></span><br><span class="line">    WORD e_res[<span class="number">4</span>];     <span class="comment">// 保留字段</span></span><br><span class="line">    WORD e_oemid;      <span class="comment">// OEM标识符</span></span><br><span class="line">    WORD e_oeminfo;    <span class="comment">// OEM信息</span></span><br><span class="line">    WORD e_res2[<span class="number">10</span>];   <span class="comment">// 扩展保留字段</span></span><br><span class="line">    DWORD e_lfanew;    <span class="comment">// PE头偏移(关键字段),relative vitual address</span></span><br><span class="line">&#125; IMAGE_DOS_HEADER;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="DOS头"><a href="#DOS头" class="headerlink" title="DOS头"></a>DOS头</h4><p>为了考虑对DOS的兼容，在最前面加上了一个 IMAGE_DOS_HEADER 结构体</p>
+<p><img src="/filelearn/1.jpg" alt="1"></p>
+<p>结构体大小为64字节</p>
+<p>主要两个成员一个是e_magic(DOS的签名)[前两字节]，不如是4D 5A(MZ)</p>
+<p>e_lfanew[后4字节]指向PE头的起始位置<code>IMAGE_NT_HEADERS</code> 结构体</p>
+<p>这文件e_lfnew中是0000000080(从文件开头到的偏移量)</p>
+<p><img src="/filelearn/2.jpg" alt="2"></p>
+<p>在dnspy中可以很好的看见PE头的结构</p>
+<h4 id="DOS存根"><a href="#DOS存根" class="headerlink" title="DOS存根"></a>DOS存根</h4><p><img src="/filelearn/3.jpg" alt="3"></p>
+<p>大小不固定，由数据（字符串数据）和代码混合而成，提示用户仅能在Window环境中运行</p>
+<h4 id="NT头"><a href="#NT头" class="headerlink" title="NT头"></a>NT头</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span> &#123;</span></span><br><span class="line">    DWORD Signature;                     <span class="comment">// PE 签名 &quot;PE\0\0&quot;</span></span><br><span class="line">    IMAGE_FILE_HEADER FileHeader;        <span class="comment">// 文件头</span></span><br><span class="line">    IMAGE_OPTIONAL_HEADER OptionalHeader;<span class="comment">// 可选头</span></span><br><span class="line">&#125; IMAGE_NT_HEADERS, *PIMAGE_NT_HEADERS;</span><br></pre></td></tr></table></figure>
+
+<p>签名(值为50 45 00 00， PE\0\0)、文件头(IMAGE_FILE_HEADER结构体)、可选头(PIMAGE_NT_HEADERS结构体)三件套</p>
+<p><strong>文件头</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_FILE_HEADER</span> &#123;</span></span><br><span class="line">    WORD  Machine;          <span class="comment">//目标机器类型             </span></span><br><span class="line">    WORD  NumberOfSections;        <span class="comment">//节区数量      </span></span><br><span class="line">    DWORD TimeDateStamp;                <span class="comment">//文件创建时间</span></span><br><span class="line">    DWORD PointerToSymbolTable;       <span class="comment">//符号表指针   </span></span><br><span class="line">    DWORD NumberOfSymbols;   <span class="comment">//符号表中的符号数量</span></span><br><span class="line">    WORD  SizeOfOptionalHeader;<span class="comment">//可选头大小</span></span><br><span class="line">    WORD  Characteristics;      <span class="comment">//文件属性        </span></span><br><span class="line">&#125; IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;</span><br></pre></td></tr></table></figure>
+
+<p>有下面4个主要成员：</p>
+<p>1.Machine</p>
+<p>每个CPU都有唯一的machine码，兼容32位Intel x86的值为0x014C</p>
+<p>下面是winnt.h中的machine</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_UNKNOWN 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_I386 0x014c	<span class="comment">// Intel 386</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_R3000 0x0162	<span class="comment">// MIPS little-endian, 0x160 big-endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_R4000 0x0166 <span class="comment">// MIPS little-endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_R10000 0x0168 <span class="comment">// MIPS little-endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_WCEMIPSV2 0x0169 <span class="comment">// MIPS little-endian WCE v2</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_ALPHA 0x0184 <span class="comment">// Alpha_AXP</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_SH3 0x01a2	<span class="comment">// SH3 little-endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_SH3DSP 0x01a3	<span class="comment">// SH3-DSP</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_SH3E 0x01a4	<span class="comment">// SH3E little-endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_SH4 0x01a6	<span class="comment">// SH4 little-endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_SH5 0x01a8	<span class="comment">// SH5</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_ARM 0x01c0	<span class="comment">// ARM Little-Endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_ARMV7 0x01c4	<span class="comment">// ARMv7 (or higher) Thumb mode only</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_ARMNT 0x01c4	<span class="comment">// ARMv7 (or higher) Thumb mode only</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_ARM64 0xaa64	<span class="comment">// ARM64 Little-Endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_THUMB 0x01c2	<span class="comment">// ARM Thumb-2 Little-Endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_AM33 0x01d3	<span class="comment">// Matsushita AM33</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_POWERPC 0x01F0	<span class="comment">// IBM PowerPC Little-Endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_POWERPCFP 0x01f1	<span class="comment">// IBM PowerPC with floating point support</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_IA64 0x0200	<span class="comment">// Intel Itanium</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_MIPS16 0x0266	<span class="comment">// MIPS16</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_ALPHA64 0x0284	<span class="comment">// ALPHA64</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_MIPSFPU 0x0366	<span class="comment">// MIPS with FPU</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_MIPSFPU16 0x0466	<span class="comment">// MIPS16 with FPU</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_AXP64 IMAGE_FILE_MACHINE_ALPHA64	<span class="comment">// ALPHA64</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_TRICORE 0x0520	<span class="comment">// Infineon</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_CEF 0x0CEF	<span class="comment">// Common Execution Format</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_EBC 0x0EBC	<span class="comment">// EFI Byte Code</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_AMD64 0x8664	<span class="comment">// AMD64 (K8)</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_M32R 0x9041	<span class="comment">// M32R little-endian</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_FILE_MACHINE_CEE 0xc0ee	<span class="comment">// Common Execution Environment</span></span></span><br></pre></td></tr></table></figure>
+
+<p>2.NumberOfSections（值一定大于0，当定义的节区值与实际的不同时会运行错误）</p>
+<p>PE文件将代码、数据和资源分依据属性分类到各个节区中存储，NumberOfSections代表各个节区的数量</p>
+<p>3.SizeOfOptionalHeader</p>
+<p>IMAGINE_OPTIONAL_HESDER结构体的大小</p>
+<p>4.characteristics</p>
+<p>用于标识文件的属性，文件是否可运行，是否为DLL文件等信息,characteristics是各个属性的bit or(位或的结果)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#define IMAGE_FILE_RELOCS_STRIPPED 0x0001		// Relocation info stripped（移除） from file</span><br><span class="line">#define IMAGE_FILE_EXECUTABLE_IMAGE 0x0002		// File is executable  (i.e. no unresolved externel references)</span><br><span class="line">#define IMAGE_FILE_LINE_NUMS_STRIPPED 0x0004	// Line numbers stripped from file</span><br><span class="line">#define IMAGE_FILE_LOCAL_SYMS_STRIPPED 0x0008	// Local symbols stripped from file</span><br><span class="line">#define IMAGE_FILE_AGGRESIVE_WS_TRIM 0x0010		// Aggressively trim working set</span><br><span class="line">#define IMAGE_FILE_LARGE_ADDRESS_AWARE 0x0020	// App can handle &gt;2gb addresses</span><br><span class="line">#define IMAGE_FILE_BYTES_REVERSED_LO 0x0080		// Bytes of machine word are reversed.</span><br><span class="line">#define IMAGE_FILE_32BIT_MACHINE 0x0100			// 32 bit word machine</span><br><span class="line">#define IMAGE_FILE_DEBUG_STRIPPED 0x0200		// Debugging info stripped from file in .DBG file(debug信息已移除并单独存放)</span><br><span class="line">#define IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP 0x0400	// If Image is on removable media, copy and run from the swap file.</span><br><span class="line">#define IMAGE_FILE_NET_RUN_FROM_SWAP 0x0800		// If Image is on Net, copy and run from the swap file.</span><br><span class="line">#define IMAGE_FILE_SYSTEM 0x1000				// System File</span><br><span class="line">#define IMAGE_FILE_DLL 0x2000					// File is a DLL</span><br><span class="line">#define IMAGE_FILE_UP_SYSTEM_ONLY 0x4000		// File should only be run on a UP machine</span><br><span class="line">#define IMAGE_FILE_BYTES_REVERSED_HI 0x8000		// Bytes of machine word are reversed.</span><br></pre></td></tr></table></figure>
+
+<p>关注0x0002和0x200</p>
+<p><img src="/learning/1.jpg" alt="1"></p>
+<p><strong>可选头</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">    typedef struct _IMAGE_DATA_DIRECTORY &#123;</span><br><span class="line">      DWORD VirtualAddress;</span><br><span class="line">      DWORD Size;</span><br><span class="line">    &#125; IMAGE_DATA_DIRECTORY,*PIMAGE_DATA_DIRECTORY;</span><br><span class="line"></span><br><span class="line">#define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16</span><br><span class="line"></span><br><span class="line">    typedef struct _IMAGE_OPTIONAL_HEADER &#123;</span><br><span class="line"></span><br><span class="line">        // Standard fields.</span><br><span class="line">      WORD Magic;</span><br><span class="line">      BYTE MajorLinkerVersion;</span><br><span class="line">      BYTE MinorLinkerVersion;</span><br><span class="line">      DWORD SizeOfCode;</span><br><span class="line">      DWORD SizeOfInitializedData;</span><br><span class="line">      DWORD SizeOfUninitializedData;</span><br><span class="line">      DWORD AddressOfEntryPoint;</span><br><span class="line">      DWORD BaseOfCode;</span><br><span class="line">      DWORD BaseOfData;</span><br><span class="line">        </span><br><span class="line">        // NT additional fields.</span><br><span class="line">      DWORD ImageBase;</span><br><span class="line">      DWORD SectionAlignment;</span><br><span class="line">      DWORD FileAlignment;</span><br><span class="line">      WORD MajorOperatingSystemVersion;</span><br><span class="line">      WORD MinorOperatingSystemVersion;</span><br><span class="line">      WORD MajorImageVersion;</span><br><span class="line">      WORD MinorImageVersion;</span><br><span class="line">      WORD MajorSubsystemVersion;</span><br><span class="line">      WORD MinorSubsystemVersion;</span><br><span class="line">      DWORD Win32VersionValue;</span><br><span class="line">      DWORD SizeOfImage;</span><br><span class="line">      DWORD SizeOfHeaders;</span><br><span class="line">      DWORD CheckSum;</span><br><span class="line">      WORD Subsystem;</span><br><span class="line">      WORD DllCharacteristics;</span><br><span class="line">      DWORD SizeOfStackReserve;</span><br><span class="line">      DWORD SizeOfStackCommit;</span><br><span class="line">      DWORD SizeOfHeapReserve;</span><br><span class="line">      DWORD SizeOfHeapCommit;</span><br><span class="line">      DWORD LoaderFlags;</span><br><span class="line">      DWORD NumberOfRvaAndSizes;</span><br><span class="line">      IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];</span><br><span class="line">    &#125; IMAGE_OPTIONAL_HEADER32,*PIMAGE_OPTIONAL_HEADER32;</span><br></pre></td></tr></table></figure>
+
+<p>1.Magic</p>
+<p>IMAGE_NT_OPTIONAL_HDER32_MAGIC时,Magic为0x10B(可执行映像)</p>
+<p>IMAGINE_NT_OPTIONAL_HDER64_MAGIC为0x20B(可执行映像)</p>
+<p>2.AddressOfEntryPoint</p>
+<p>指出程序最先进入的起始地址(有ep入口点的RVA)</p>
+<p>3.IMAGEBASE</p>
+<p>文件加载到内存的首选地址，此值是64k的倍数(64位系统)，dll的默认值是0x10000000,</p>
+<table>
+<thead>
+<tr>
+<th align="left">文件类型</th>
+<th align="left">32 位默认值</th>
+<th align="left">64 位默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>EXE</strong></td>
+<td align="left"><code>0x00400000</code></td>
+<td align="left"><code>0x140000000</code></td>
+</tr>
+<tr>
+<td align="left"><strong>DLL</strong></td>
+<td align="left"><code>0x10000000</code></td>
+<td align="left"><code>0x180000000</code></td>
+</tr>
+<tr>
+<td align="left"><strong>SYS</strong></td>
+<td align="left">无统一标准（参考值 <code>0x10000</code>）</td>
+<td align="left">无统一标准</td>
+</tr>
+</tbody></table>
+<p>但是windows一般开启ASLR(地址空间布局随机化)，也就是随机选择地址进行载入</p>
+<p>执行pe文件时pe文件先创建进程，再将文件载入内存，将eip指向imagebase+AddressOfEntryPoint进行执行</p>
+<p>4.SectionAlignment，filealignment</p>
+<p>sectionalignment内存加载的节的对齐方式</p>
+<p>filealignment文件各个部分的原始数据的对齐方式</p>
+<p>5.SizeOfImage</p>
+<p>将pe加载到内存时，SizeOfImage指定了PE Image在虚拟内存中所占的空间大小</p>
+<p>6.SizeIfHeaders</p>
+<p>PE头的大小，是FileAlignment的整数倍</p>
+<p>因此第一节区位置距离文件开始的偏移量和SizeIfHeaders相等</p>
+<p>7.Subsystem</p>
+<p>区分驱动文件*.sys和普通的可执行文件*.dll</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>含义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Driver文件</td>
+<td>系统驱动(*.sys)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GUI文件</td>
+<td>窗口应用程序(ida.exe)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CUI文件</td>
+<td>控制台应用程序(cmd.exe)</td>
+</tr>
+</tbody></table>
+<p>8.NumberOfRvaAndSizes</p>
+<p>用来指定DataDirectory(<code>IMAGE_OPTIONAL_HEADER32</code>最后一个成员)数组的个数</p>
+<p>9.DataDirectory</p>
+<p>由IMAGE_DATA_DIRETORY结构体数组组成</p>
+<p>每个成员包含两个 DWORD 成员，分别表示某个数据目录的 RVA 和大小</p>
+<table>
+<thead>
+<tr>
+<th>索引</th>
+<th>winnt.h 宏</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_EXPORT</code></td>
+<td>导出表</td>
+<td>RVA 指向 <code>IMAGE_EXPORT_DIRECTORY</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_IMPORT</code></td>
+<td>导入表</td>
+<td>RVA 指向 <code>IMAGE_IMPORT_DESCRIPTOR</code> 数组，以全 0 项结束</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_RESOURCE</code></td>
+<td>资源表</td>
+<td>以树形式组织，路径为 <code>.rsrc</code>，通常包含 3 层</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_EXCEPTION</code></td>
+<td>异常表</td>
+<td>x64 或 ARM 的 <code>.pdata</code>（<code>RUNTIME_FUNCTION</code> 数组）；x86 通常为空</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_SECURITY</code></td>
+<td>证书表</td>
+<td><strong>例外：VirtualAddress 是文件偏移，不是 RVA</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_BASERELOC</code></td>
+<td>基址重定位表</td>
+<td><code>.reloc</code>，指向块链结构</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_DEBUG</code></td>
+<td>调试目录</td>
+<td><code>IMAGE_DEBUG_DIRECTORY</code> 数组，常见于 <code>.debug</code> 或 <code>.pdata</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_ARCHITECTURE</code></td>
+<td>架构保留</td>
+<td>规范要求保留，应包含 0 项</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_GLOBALPTR</code></td>
+<td>全局指针</td>
+<td>保留，约定包含 0 项；MIPS 用过</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_TLS</code></td>
+<td>线程局部存储</td>
+<td><code>IMAGE_TLS_DIRECTORY</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG</code></td>
+<td>加载配置</td>
+<td><code>.rdata</code> 中的 <code>IMAGE_LOAD_CONFIG_DIRECTORY</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT</code></td>
+<td>绑定导入</td>
+<td>旧式预绑定导入，由 <code>IMAGE_BOUND_IMPORT_DESCRIPTOR</code> 构成，现代链接器基本不产生</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_IAT</code></td>
+<td>导入地址表</td>
+<td>IAT 本身的 RVA 和大小，常用于保护区段</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT</code></td>
+<td>延迟导入</td>
+<td><code>IMAGE_DELAYLOAD_DESCRIPTOR</code> 数组，以全 0 项结束</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR</code></td>
+<td>CLR 运行时头</td>
+<td>指向 <code>IMAGE_COR20_HEADER</code>；非托管 PE 中这里为 0</td>
+</tr>
+<tr>
+<td>15</td>
+<td>（无宏）</td>
+<td>保留</td>
+<td>规范要求包含 0 项</td>
+</tr>
+</tbody></table>
+<p>主要注意 <code>EXPORT Directory</code> 和 <code>IMPORT Directory</code> 还有 <code>TLS Directory</code></p>
+<h3 id="节区头"><a href="#节区头" class="headerlink" title="节区头"></a>节区头</h3><p>节区头决定了节区的属性</p>
+<table>
+<thead>
+<tr>
+<th align="center">类别</th>
+<th align="center">访问权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">code</td>
+<td align="center">执行，读取权限</td>
+</tr>
+<tr>
+<td align="center">data</td>
+<td align="center">非执行，读写权限</td>
+</tr>
+<tr>
+<td align="center">resource</td>
+<td align="center">非执行，读取权限</td>
+</tr>
+</tbody></table>
+<p>把具有相同属性的内容放在同一个节区，方便操作系统对节区的保护</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">_IMAGE_SECTION_HEADER</span> &#123;</span><br><span class="line">  BYTE  Name[IMAGE_SIZEOF_SHORT_NAME];</span><br><span class="line">  <span class="keyword">union</span> &#123;</span><br><span class="line">    DWORD PhysicalAddress;</span><br><span class="line">    DWORD VirtualSize;</span><br><span class="line">  &#125; Misc;</span><br><span class="line">  DWORD VirtualAddress;</span><br><span class="line">  DWORD SizeOfRawData;</span><br><span class="line">  DWORD PointerToRawData;</span><br><span class="line">  DWORD PointerToRelocations;</span><br><span class="line">  DWORD PointerToLinenumbers;</span><br><span class="line">  WORD  NumberOfRelocations;</span><br><span class="line">  WORD  NumberOfLinenumbers;</span><br><span class="line">  DWORD Characteristics;</span><br><span class="line">&#125; IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;</span><br></pre></td></tr></table></figure>
+
+<p>Misc.physicalAddress是文件地址</p>
+<p>Misc.virtualSize;节加载到内存中的大小</p>
+<p>VirtualAddress内存中节区的起始地址（RVA）</p>
+<p>SizeOfRawData磁盘文件中节区所占的大小</p>
+<p>PointerToRawData磁盘中节区的起始位置</p>
+<p>Characteristics节区属性</p>
+<p><img src="/learning/22.jpg" alt="2"></p>
+<h1 id="RVA-to-RAW"><a href="#RVA-to-RAW" class="headerlink" title="RVA to RAW"></a>RVA to RAW</h1><p>PE文件从磁盘到内存的映射</p>
+<p>RAW是文件偏移</p>
+<p>RVA是相对虚拟地址</p>
+<p>RVA &#x3D; VA - ImageBASE</p>
+<p>这都是偏移</p>
+<p>RAW -  PointerToRawData &#x3D; RVA - VirtualAddress</p>
+<p>RAW &#x3D; RVA - VirtualAddress(RVA) +  PointerToRawData</p>
+<h1 id="IAT"><a href="#IAT" class="headerlink" title="IAT"></a>IAT</h1><p>IAT是导入地址表，保存的内容和 Windows 操作系统的核心进程、内存、DLL结构有关，记录有哪些函数</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a target="_blank" rel="noopener" href="https://knd0210.xyz/reverse/reverse3/#%E5%8F%AF%E9%80%89%E5%A4%B4">逆向工程核心原理03 | exdoubled’s blog</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.mgoyy.cn">无夜</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.mgoyy.cn/2026/10/23/%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/">https://www.mgoyy.cn/2026/10/23/%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.mgoyy.cn" target="_blank">wuye的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/reverse/">reverse</a></div><div class="post-share"><div class="social-share" data-image="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/18/android%E5%BC%80%E5%8F%91/" title="android开发"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">android开发</div></div><div class="info-2"><div class="info-item-1">android架构android的操作系统 android的操作系统是一个由软件组件的栈，从下到上一般分为5个部分 1.Linux内核(最底层) 2.硬件抽象层(HAL) 3.Android运行时(ART)+原生c&#x2F;c++库 4.java API框架 5.系统应用 术语 Android应用:仅使用Android API开发的应用 特权应用:使用Android和系统API创建的应用，这些应用必须预安装在设备上 系统 API 表示仅供合作伙伴和 OEM 纳入捆绑应用的 Android API，在源代码中被标记为 @SystemApi </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/05/05/htmllearning/" title="htmllearning"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-05</div><div class="info-item-2">htmllearning</div></div><div class="info-2"><div class="info-item-1">开始(html叫超文本标记语言)众所周知html有tags,attibute,elements HTML标签HTML标签是由尖括号突出的关键词&lt;html&gt; HTML标签通常成对出现&lt;b&gt;与&lt;&#x2F;b&gt;(第一个是开始标签，)第二个是结束标签 &lt;标签&gt;内容&lt;&#x2F;标签&gt; HTML元素一个元素包含开始标签与结束标签 &lt;p&gt;这是一个段落&lt;&#x2F;p&gt; 123456789101112&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;我的第一个标题&lt;/h1&gt;&lt;p&gt;我的第一个段落&lt;/p&gt;3&lt;/body&gt;&lt;/html&gt;  入土级代码讲解 &lt;!DOCTYPE html&gt;声明为HTML5文档(html升级版) &lt;html&gt;HTML页面的...</div></div></div></a><a class="pagination-related" href="/2026/02/02/androidleearn/" title="androidleearn"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-02</div><div class="info-item-2">androidleearn</div></div><div class="info-2"><div class="info-item-1">一段dex文件的smali代码分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576     修饰符  /* 私有   静态   不可修改*/  方法名              参数.method private static final onCreate$lambda-2(Lkotlin/jvm/internal/Ref$IntRef;Lcom/zj/wuaipojie/ui/ChallengeSecond;Landroid/widget/ImageView;Landroid/widget/ImageView;Landroid/widget/ImageView;Landroid/view/View;)Z（返回值的类型）    .registers 7   //寄存器的数量                              .line 3...</div></div></div></a><a class="pagination-related" href="/2026/04/26/Js%E9%80%86%E5%90%91/" title="Js逆向"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-26</div><div class="info-item-2">Js逆向</div></div><div class="info-2"><div class="info-item-1">杂谈还久没写blog 最近还是摆了点 概念可以破解前端加密、绕过反爬机制、模拟运行行为等 基础语法基础 基本数据类型  字符串 String数字  Number布尔 Boolean空值 Null未定义 Undefined独一无二的值 Symbol  引用数据类型  对象 Object 函数 Function 数组 Array  语句标识符  声明块作用域的变量 let(也可以全局作用域，推荐) 声明变量 var 断点调试  debugger 当前所属对象 this  比较运算符  &#x3D;&#x3D;尝试将等号两边转为相同的类型 &#x3D;&#x3D;&#x3D;是要类型与值完全相等 在js逆向的&#x3D;&#x3D;是，可以传入一个通过类型转换后能匹配上的值俩进行绕过 null &#x3D;&#x3D; undefined返回true null &#x3D;&#x3D;&#x3D;&#x3D; undefined返回NULL NaN &#x3D;&#x3D; NaN返回fasle（其实在在JavaScript中，NaN（Not-a-Number）是一个全局属性，用于表示...</div></div></div></a><a class="pagination-related" href="/2026/08/21/%E6%9F%90%E8%AE%BA%E5%9D%9B%E7%B1%BB%E8%BD%AF%E4%BB%B6%E7%9A%84%E9%80%86%E5%90%91/" title="某论坛类软件的逆向"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-21</div><div class="info-item-2">某论坛类软件的逆向</div></div><div class="info-2"><div class="info-item-1">前言感慨一下AI的强大，让以前很费时间和和很大难度变得很简单 1.逆向登录(主要逆向登陆的加密算法)一般来说登陆的密码加密的过程是 123456789loginByPasswordgetRSAKeygeetest        ← 极验验证码相关rsa_public_keypasswordMIGf           ← RSA 公钥 DER 的 Base64 前缀（1024位）MIIBIj         ← RSA 公钥前缀（2048位）CipherPKCS1  用jadx打开该软件发现源代码的类名都被混淆成各个字母，但是Android这个类名还是很显眼的，仅是将类名混淆，方法名一般便于阅读不好混淆，直接查找 loginByPassword，看一下那个方法引用这个函数 找到了login方法(这很明显)，该方法中检验到空行会有NullPointerException异常报告 1PorteH5logUtils.INSTANCE.report(&quot;porte&quot;, &quot;password_login&quot;, o0.M(C17133r0.a(&quot;m...</div></div></div></a><a class="pagination-related" href="/2026/01/01/qctfreverse/" title="reverseweekn"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-01</div><div class="info-item-2">reverseweekn</div></div><div class="info-2"><div class="info-item-1">1**[Week2] CPPReverse**一开始n个小时我直接看着c++原程序，结果抽象的一批（附带PDB文件），这个提醒 pdb存着什么（源代码文件路径与行号信息，局部变量、全局变量和类型，函数名和参数信息，类、结构体的成员信息）其实其实映射表（可以类比Android逆向的so层处理） 当然由于笨蛋的我并未发现这点，导致ida程序十分抽象，难度直线飙升，所以先来个禁pdb的  进来直接被一堆不知道什么的东西吓哭了,直接开始动调  这明显是输入，按n改名，一定要改名，后面再次出现就知道他是干什么的  v13 &#x3D; (unsigned __int8)sub_7FF626234970(v16, “flag{“) || *(_BYTE *)sub_7FF626233C10(v30) !&#x3D; 125; 注意这个 *(_BYTE *)明显是字符125按r变成’}’ 这很明显是输入验证 不妨输入flag{123456}123456最白不要是000000那么反序就看不出来了  接下来是重头戏  这是输入突然被推入栈顶，多半是要进行操作了  下一步flag{}没了，这事就知道...</div></div></div></a><a class="pagination-related" href="/2026/07/09/gdb%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/" title="gdb入门指北"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-07-09</div><div class="info-item-2">gdb入门指北</div></div><div class="info-2"><div class="info-item-1">这只是一个简单的对于gdb的学习要调试时需要保留调试信息 对于c程序可以在编译时加上-g参数 没有调试信息无法进行调试 </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">无夜</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">可执行文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PE%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">PE文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PE%E6%96%87%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.1.1.</span> <span class="toc-text">PE文件的基本格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VA%E4%B8%8ERVA"><span class="toc-number">2.1.2.</span> <span class="toc-text">VA与RVA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PE%E5%A4%B4"><span class="toc-number">2.1.3.</span> <span class="toc-text">PE头</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DOS%E5%A4%B4"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">DOS头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DOS%E5%AD%98%E6%A0%B9"><span class="toc-number">2.1.3.2.</span> <span class="toc-text">DOS存根</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NT%E5%A4%B4"><span class="toc-number">2.1.3.3.</span> <span class="toc-text">NT头</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8A%82%E5%8C%BA%E5%A4%B4"><span class="toc-number">2.1.4.</span> <span class="toc-text">节区头</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RVA-to-RAW"><span class="toc-number">3.</span> <span class="toc-text">RVA to RAW</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IAT"><span class="toc-number">4.</span> <span class="toc-text">IAT</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-number">5.</span> <span class="toc-text">reference</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/23/%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/" title="可执行文件">可执行文件</a><time datetime="2026-10-23T11:01:42.000Z" title="发表于 2026-10-23 19:01:42">2026-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/18/android%E5%BC%80%E5%8F%91/" title="android开发">android开发</a><time datetime="2026-10-18T11:38:41.000Z" title="发表于 2026-10-18 19:38:41">2026-10-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/13/qctf%E4%BA%8C%E7%95%AA/" title="qctf二番">qctf二番</a><time datetime="2026-10-13T03:06:34.000Z" title="发表于 2026-10-13 11:06:34">2026-10-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/11/hook%E5%85%A5%E9%97%A8/" title="hook入门">hook入门</a><time datetime="2026-10-11T13:30:36.000Z" title="发表于 2026-10-11 21:30:36">2026-10-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/27/%E5%9F%BA%E7%A1%80hook/" title="基础hook">基础hook</a><time datetime="2026-09-27T08:47:40.000Z" title="发表于 2026-09-27 16:47:40">2026-09-27</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 无夜</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.3"></script><script src="/js/main.js?v=5.5.3"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>wuye的博客</title><meta name="author" content="无夜"><meta name="copyright" content="无夜"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="共 40 篇文章 · 按发布时间排序                       2026年                           10月                        10-23               可执行文件             10-18               android开发">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Timeline">
+<meta property="og:url" content="https://www.mgoyy.cn/timeline/index.html">
+<meta property="og:site_name" content="wuye的博客">
+<meta property="og:description" content="共 40 篇文章 · 按发布时间排序                       2026年                           10月                        10-23               可执行文件             10-18               android开发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.mgoyy.cn/images/b0c1d74766dd8bce0ad860be15c46993a.jpg">
+<meta property="article:author" content="无夜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.mgoyy.cn/images/b0c1d74766dd8bce0ad860be15c46993a.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.mgoyy.cn/timeline/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Timeline',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/b0c1d74766dd8bce0ad860be15c46993a.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fas fa-stream"></i><span> Timeline</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">wuye的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/timeline/"><i class="fa-fw fas fa-stream"></i><span> Timeline</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">Timeline</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">Timeline</div><div class="container" id="article-container"><link rel="stylesheet" href="&#x2F;css&#x2F;timeline.css">
+        <div class="post-timeline">
+          <p class="timeline-summary">共 40 篇文章 · 按发布时间排序</p>
+          
+    <section class="timeline-year" aria-labelledby="timeline-2026">
+      <h2 id="timeline-2026">2026<span>年</span></h2>
+      
+        <section class="timeline-month" aria-labelledby="timeline-2026-10">
+          <h3 id="timeline-2026-10">10<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-10-23">10-23</time>
+              <a href="&#x2F;2026&#x2F;10&#x2F;23&#x2F;可执行文件&#x2F;">可执行文件</a></li>
+            <li><time datetime="2026-10-18">10-18</time>
+              <a href="&#x2F;2026&#x2F;10&#x2F;18&#x2F;android开发&#x2F;">android开发</a></li>
+            <li><time datetime="2026-10-13">10-13</time>
+              <a href="&#x2F;2026&#x2F;10&#x2F;13&#x2F;qctf二番&#x2F;">qctf二番</a></li>
+            <li><time datetime="2026-10-11">10-11</time>
+              <a href="&#x2F;2026&#x2F;10&#x2F;11&#x2F;hook入门&#x2F;">hook入门</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-09">
+          <h3 id="timeline-2026-09">09<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-09-27">09-27</time>
+              <a href="&#x2F;2026&#x2F;09&#x2F;27&#x2F;基础hook&#x2F;">基础hook</a></li>
+            <li><time datetime="2026-09-27">09-27</time>
+              <a href="&#x2F;2026&#x2F;09&#x2F;27&#x2F;wuye的二次元旅程&#x2F;">wuye的二次元旅程</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-08">
+          <h3 id="timeline-2026-08">08<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-08-21">08-21</time>
+              <a href="&#x2F;2026&#x2F;08&#x2F;21&#x2F;某论坛类软件的逆向&#x2F;">某论坛类软件的逆向</a></li>
+            <li><time datetime="2026-08-18">08-18</time>
+              <a href="&#x2F;2026&#x2F;08&#x2F;18&#x2F;java&#x2F;">java</a></li>
+            <li><time datetime="2026-08-06">08-06</time>
+              <a href="&#x2F;2026&#x2F;08&#x2F;06&#x2F;Android-入门&#x2F;">Android 入门</a></li>
+            <li><time datetime="2026-08-05">08-05</time>
+              <a href="&#x2F;2026&#x2F;08&#x2F;05&#x2F;杂想与AI工作流&#x2F;">杂想与AI工作流</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-07">
+          <h3 id="timeline-2026-07">07<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-07-20">07-20</time>
+              <a href="&#x2F;2026&#x2F;07&#x2F;20&#x2F;计算机网络&#x2F;">计算机网络</a></li>
+            <li><time datetime="2026-07-09">07-09</time>
+              <a href="&#x2F;2026&#x2F;07&#x2F;09&#x2F;gdb入门指北&#x2F;">gdb入门指北</a></li>
+            <li><time datetime="2026-07-07">07-07</time>
+              <a href="&#x2F;2026&#x2F;07&#x2F;07&#x2F;诗词&#x2F;">文学</a></li>
+            <li><time datetime="2026-07-04">07-04</time>
+              <a href="&#x2F;2026&#x2F;07&#x2F;04&#x2F;无题&#x2F;">无题</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-05">
+          <h3 id="timeline-2026-05">05<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-05-30">05-30</time>
+              <a href="&#x2F;2026&#x2F;05&#x2F;30&#x2F;vm&#x2F;">vm</a></li>
+            <li><time datetime="2026-05-20">05-20</time>
+              <a href="&#x2F;2026&#x2F;05&#x2F;20&#x2F;polarisctf招新赛-2026&#x2F;">polarisctf招新赛-2026~</a></li>
+            <li><time datetime="2026-05-05">05-05</time>
+              <a href="&#x2F;2026&#x2F;05&#x2F;05&#x2F;htmllearning&#x2F;">htmllearning</a></li>
+            <li><time datetime="2026-05-03">05-03</time>
+              <a href="&#x2F;2026&#x2F;05&#x2F;03&#x2F;pwnlearn&#x2F;">pwnlearn</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-04">
+          <h3 id="timeline-2026-04">04<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-04-26">04-26</time>
+              <a href="&#x2F;2026&#x2F;04&#x2F;26&#x2F;Js逆向&#x2F;">Js逆向</a></li>
+            <li><time datetime="2026-04-13">04-13</time>
+              <a href="&#x2F;2026&#x2F;04&#x2F;13&#x2F;游戏逆向入门&#x2F;">游戏逆向入门</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-03">
+          <h3 id="timeline-2026-03">03<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-03-29">03-29</time>
+              <a href="&#x2F;2026&#x2F;03&#x2F;29&#x2F;agent学习&#x2F;">agent学习</a></li>
+            <li><time datetime="2026-03-27">03-27</time>
+              <a href="&#x2F;2026&#x2F;03&#x2F;27&#x2F;frida&#x2F;">frida</a></li>
+            <li><time datetime="2026-03-21">03-21</time>
+              <a href="&#x2F;2026&#x2F;03&#x2F;21&#x2F;opencode的使用与一个对话式AI的下载&#x2F;">opencode的使用与一个对话式AI的下载</a></li>
+            <li><time datetime="2026-03-19">03-19</time>
+              <a href="&#x2F;2026&#x2F;03&#x2F;19&#x2F;ailearn&#x2F;">ailearn</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-02">
+          <h3 id="timeline-2026-02">02<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-02-20">02-20</time>
+              <a href="&#x2F;2026&#x2F;02&#x2F;20&#x2F;qctfweek3&#x2F;">qctfweek3</a></li>
+            <li><time datetime="2026-02-17">02-17</time>
+              <a href="&#x2F;2026&#x2F;02&#x2F;17&#x2F;新年&#x2F;">新年</a></li>
+            <li><time datetime="2026-02-02">02-02</time>
+              <a href="&#x2F;2026&#x2F;02&#x2F;02&#x2F;androidleearn&#x2F;">androidleearn</a></li>
+            <li><time datetime="2026-02-02">02-02</time>
+              <a href="&#x2F;2026&#x2F;02&#x2F;02&#x2F;VNctf&#x2F;">VNctf</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2026-01">
+          <h3 id="timeline-2026-01">01<span>月</span></h3>
+          <ul>
+            <li><time datetime="2026-01-27">01-27</time>
+              <a href="&#x2F;2026&#x2F;01&#x2F;27&#x2F;buu&#x2F;">buu</a></li>
+            <li><time datetime="2026-01-24">01-24</time>
+              <a href="&#x2F;2026&#x2F;01&#x2F;24&#x2F;逆向手的自我修养&#x2F;">逆向手的自我修养</a></li>
+            <li><time datetime="2026-01-22">01-22</time>
+              <a href="&#x2F;2026&#x2F;01&#x2F;22&#x2F;misc法术&#x2F;">misc法术</a></li>
+            <li><time datetime="2026-01-14">01-14</time>
+              <a href="&#x2F;2026&#x2F;01&#x2F;14&#x2F;y&#x2F;">y</a></li>
+            <li><time datetime="2026-01-13">01-13</time>
+              <a href="&#x2F;2026&#x2F;01&#x2F;13&#x2F;notitile&#x2F;">notitile</a></li>
+            <li><time datetime="2026-01-01">01-01</time>
+              <a href="&#x2F;2026&#x2F;01&#x2F;01&#x2F;qctfreverse&#x2F;">reverseweekn</a></li>
+          </ul>
+        </section>
+    </section>
+    <section class="timeline-year" aria-labelledby="timeline-2025">
+      <h2 id="timeline-2025">2025<span>年</span></h2>
+      
+        <section class="timeline-month" aria-labelledby="timeline-2025-12">
+          <h3 id="timeline-2025-12">12<span>月</span></h3>
+          <ul>
+            <li><time datetime="2025-12-31">12-31</time>
+              <a href="&#x2F;2025&#x2F;12&#x2F;31&#x2F;2025最后一篇&#x2F;">2025最后一篇</a></li>
+            <li><time datetime="2025-12-31">12-31</time>
+              <a href="&#x2F;2025&#x2F;12&#x2F;31&#x2F;miscwp&#x2F;">miscwp</a></li>
+            <li><time datetime="2025-12-21">12-21</time>
+              <a href="&#x2F;2025&#x2F;12&#x2F;21&#x2F;wp&#x2F;">wp</a></li>
+          </ul>
+        </section>
+        <section class="timeline-month" aria-labelledby="timeline-2025-11">
+          <h3 id="timeline-2025-11">11<span>月</span></h3>
+          <ul>
+            <li><time datetime="2025-11-21">11-21</time>
+              <a href="&#x2F;2025&#x2F;11&#x2F;21&#x2F;Flower花指令的学习&#x2F;">Flower花指令和壳的学习</a></li>
+            <li><time datetime="2025-11-18">11-18</time>
+              <a href="&#x2F;2025&#x2F;11&#x2F;18&#x2F;wuye的逆向之旅始篇&#x2F;">wuye的逆向之旅始篇</a></li>
+            <li><time datetime="2025-11-13">11-13</time>
+              <a href="&#x2F;2025&#x2F;11&#x2F;13&#x2F;hello-world&#x2F;">Hello World</a></li>
+          </ul>
+        </section>
+    </section>
+        </div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 无夜</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.3"></script><script src="/js/main.js?v=5.5.3"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
